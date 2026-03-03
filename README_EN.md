@@ -84,6 +84,53 @@ deepagents
 
 Type naturally as you would in a chat interface. The Agent will use its built-in tools, skills, and memory to help you complete tasks.
 
+### Non-CLI Mode (SDK + HTTP Service)
+
+If you want to embed DeepAgents into your own system, you can use the runtime
+directly without the Textual CLI:
+
+```bash
+# Install service dependencies
+pip install -e ".[service]"
+
+# Start HTTP service (default: 0.0.0.0:8000)
+deepagents-service
+```
+
+Default service endpoints:
+
+- `GET /health`
+- `POST /chat` (single response)
+- `WS /chat/stream` (streaming events)
+
+Python SDK example:
+
+```python
+import asyncio
+
+from deepagents_service.runtime import DeepAgentsRuntime
+
+
+async def main():
+    async with DeepAgentsRuntime() as runtime:
+        result = await runtime.run("Summarize the repository structure.")
+        print(result.thread_id, result.output)
+
+
+asyncio.run(main())
+```
+
+You can configure service behavior with env vars:
+
+- `DEEPAGENTS_SERVICE_MODEL`
+- `DEEPAGENTS_SERVICE_ASSISTANT_ID`
+- `DEEPAGENTS_SERVICE_SANDBOX`
+- `DEEPAGENTS_SERVICE_SHELL_ALLOW_LIST`
+- `DEEPAGENTS_SERVICE_AUTO_APPROVE`
+- `DEEPAGENTS_SERVICE_HOST` / `DEEPAGENTS_SERVICE_PORT`
+
+For full architecture/API/runtime/TDD details, see: `docs/non_cli_service_en.md`
+
 ### Environment Variables Configuration
 
 Create a `.env` file in the project root directory to configure environment variables. You can copy `.env.example` as a starting point:

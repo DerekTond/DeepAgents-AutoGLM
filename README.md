@@ -84,6 +84,52 @@ deepagents
 
 像在聊天界面中一样自然输入。Agent 将使用其内置工具、技能和记忆来帮助您完成任务。
 
+### 非 CLI 版本（SDK + HTTP 服务）
+
+如果你希望把能力集成到自己的系统中，可以直接使用非 CLI 运行时：
+
+```bash
+# 安装服务依赖
+pip install -e ".[service]"
+
+# 启动 HTTP 服务（默认 0.0.0.0:8000）
+deepagents-service
+```
+
+服务默认端点：
+
+- `GET /health`
+- `POST /chat`（同步返回）
+- `WS /chat/stream`（流式事件）
+
+Python SDK 用法示例：
+
+```python
+import asyncio
+
+from deepagents_service.runtime import DeepAgentsRuntime
+
+
+async def main():
+    async with DeepAgentsRuntime() as runtime:
+        result = await runtime.run("总结当前项目结构")
+        print(result.thread_id, result.output)
+
+
+asyncio.run(main())
+```
+
+可通过环境变量配置服务运行行为：
+
+- `DEEPAGENTS_SERVICE_MODEL`
+- `DEEPAGENTS_SERVICE_ASSISTANT_ID`
+- `DEEPAGENTS_SERVICE_SANDBOX`
+- `DEEPAGENTS_SERVICE_SHELL_ALLOW_LIST`
+- `DEEPAGENTS_SERVICE_AUTO_APPROVE`
+- `DEEPAGENTS_SERVICE_HOST` / `DEEPAGENTS_SERVICE_PORT`
+
+详细文档（架构、接口、运行、排障、TDD）请参考：`docs/non_cli_service.md`
+
 ### 环境变量配置
 
 在项目根目录创建 `.env` 文件来配置环境变量。您可以复制 `.env.example` 作为起点：
