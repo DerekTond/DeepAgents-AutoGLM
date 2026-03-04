@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import os
+from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from typing import Any
 
@@ -118,20 +119,21 @@ def create_app() -> FastAPI:
     config = load_service_config()
     runtime_manager = RuntimeManager(config)
 
+    @asynccontextmanager
+    async def lifespan(_app: FastAPI):
+        await runtime_manager.get_runtime()
+        try:
+            yield
+        finally:
+            await runtime_manager.close()
+
     app = FastAPI(
         title="DeepAgents Service",
         version="0.1.0",
         description="Non-CLI DeepAgents runtime exposed over HTTP/WebSocket.",
+        lifespan=lifespan,
     )
     app.state.runtime_manager = runtime_manager
-
-    @app.on_event("startup")
-    async def _startup() -> None:
-        await runtime_manager.get_runtime()
-
-    @app.on_event("shutdown")
-    async def _shutdown() -> None:
-        await runtime_manager.close()
 
     @app.get("/health")
     async def health() -> dict[str, str]:
