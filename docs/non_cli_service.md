@@ -215,3 +215,39 @@ export DEEPAGENTS_SERVICE_SHELL_ALLOW_LIST="recommended,ls,cat"
 python3 -m pytest tests/unit_tests/service -q
 ```
 
+## 10. 联调脚本（Smoke Tests）
+
+仓库提供了两个快速联调脚本：
+
+- HTTP：`examples/non_cli_http_smoke.sh`
+- WebSocket：`examples/non_cli_ws_smoke.py`
+
+### 10.1 HTTP 联调
+
+```bash
+bash examples/non_cli_http_smoke.sh
+```
+
+可选参数：
+
+```bash
+BASE_URL=http://127.0.0.1:8000 \
+MESSAGE="总结当前项目" \
+THREAD_ID=demo-thread-001 \
+bash examples/non_cli_http_smoke.sh
+```
+
+### 10.2 WebSocket 联调
+
+```bash
+python examples/non_cli_ws_smoke.py
+```
+
+可选参数：
+
+```bash
+BASE_URL=http://127.0.0.1:8000 \
+WS_MESSAGE="请输出 3 条项目亮点" \
+THREAD_ID=demo-thread-ws-001 \
+python examples/non_cli_ws_smoke.py
+```

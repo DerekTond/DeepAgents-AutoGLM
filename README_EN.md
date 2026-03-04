@@ -131,6 +131,11 @@ You can configure service behavior with env vars:
 
 For full architecture/API/runtime/TDD details, see: `docs/non_cli_service_en.md`
 
+Quick smoke scripts:
+
+- `examples/non_cli_http_smoke.sh`
+- `examples/non_cli_ws_smoke.py`
+
 ### Environment Variables Configuration
 
 Create a `.env` file in the project root directory to configure environment variables. You can copy `.env.example` as a starting point:

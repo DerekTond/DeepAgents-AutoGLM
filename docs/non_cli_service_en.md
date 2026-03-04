@@ -98,3 +98,39 @@ Run:
 python3 -m pytest tests/unit_tests/service -q
 ```
 
+## Smoke Test Scripts
+
+The repository includes two quick smoke scripts:
+
+- HTTP: `examples/non_cli_http_smoke.sh`
+- WebSocket: `examples/non_cli_ws_smoke.py`
+
+### HTTP smoke test
+
+```bash
+bash examples/non_cli_http_smoke.sh
+```
+
+With custom params:
+
+```bash
+BASE_URL=http://127.0.0.1:8000 \
+MESSAGE="Summarize this project" \
+THREAD_ID=demo-thread-001 \
+bash examples/non_cli_http_smoke.sh
+```
+
+### WebSocket smoke test
+
+```bash
+python examples/non_cli_ws_smoke.py
+```
+
+With custom params:
+
+```bash
+BASE_URL=http://127.0.0.1:8000 \
+WS_MESSAGE="Give me 3 highlights" \
+THREAD_ID=demo-thread-ws-001 \
+python examples/non_cli_ws_smoke.py
+```

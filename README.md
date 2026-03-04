@@ -130,6 +130,11 @@ asyncio.run(main())
 
 详细文档（架构、接口、运行、排障、TDD）请参考：`docs/non_cli_service.md`
 
+快速联调脚本：
+
+- `examples/non_cli_http_smoke.sh`
+- `examples/non_cli_ws_smoke.py`
+
 ### 环境变量配置
 
 在项目根目录创建 `.env` 文件来配置环境变量。您可以复制 `.env.example` 作为起点：
